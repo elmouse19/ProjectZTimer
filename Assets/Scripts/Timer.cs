@@ -1,8 +1,9 @@
 using System;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using Random = System.Random;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Timer : MonoBehaviour
 	TMP_Text timerName;
 
 	[SerializeField] int hour, min, sec;
+	[SerializeField] Sprite playSprite, stopSprite;
 
 	DateTime dateTimeStart, dateTimeEnd;
 	TimeSpan timeDiff;
@@ -36,10 +38,10 @@ public class Timer : MonoBehaviour
 	void Start()
 	{
 		timerData =	new TimerData();
-		SetTimer(timerStart.text, timerEnd.text, timerName.text);
+		SetTimer(timerStart.text, timerEnd.text, timerName.text, "");
 	}
 
-	public void SetTimer(string start, string end, string name)
+	public void SetTimer(string start, string end, string name, string id)
 	{
 		timerData.id = Guid.NewGuid().ToString();
 		timerData.timerName = name;
@@ -48,6 +50,7 @@ public class Timer : MonoBehaviour
 
 		timerStart.text = start;
 		timerEnd.text = end;
+		timerName.text = name;
 
 		string timeStartF = timerStart.text + ":00";
 		string timeEndF = timerEnd.text + ":00";
@@ -64,6 +67,12 @@ public class Timer : MonoBehaviour
 		sec = timeDiff.Seconds;
 
 		rest = hour * 60 * 60 + min * 60 + sec;
+
+		if (rest > 0)
+		{
+			transform.Find("PlayBtn").gameObject.GetComponent<Button>().interactable = true;
+			UpdateCountDownText();
+		}
 	}
 
 	// Update is called once per frame
@@ -71,7 +80,7 @@ public class Timer : MonoBehaviour
 	{
 		if (running)
 		{
-			TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
+			//TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
 
 			rest -= Time.deltaTime;
 
@@ -81,12 +90,27 @@ public class Timer : MonoBehaviour
 				running = false;
 			}
 
-			countDown.text = string.Format("{0:hh\\:mm\\:ss}", timerTex);
+			UpdateCountDownText();
 		}
+	}
+
+	void UpdateCountDownText()
+	{
+		TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
+		countDown.text = string.Format("{0:hh\\:mm\\:ss}", timerTex);
 	}
 
 	public void Run()
 	{
 		running = !running;
+
+		if (running)
+		{
+			transform.Find("PlayBtn").GetComponent<Image>().sprite = stopSprite;
+		}
+		else
+		{
+			transform.Find("PlayBtn").GetComponent<Image>().sprite = playSprite;
+		}
 	}
 }

@@ -20,9 +20,9 @@ public class Main : MonoBehaviour
 
 	}
 
-	public void InstantiateTimer()
+	public void InstantiateTimer(TimerData timerData)
 	{
-		instantiateScript.Instantiate(timersCount);
+		instantiateScript.Instantiate(timersCount, timerData);
 		IncreaseTimersCount();
 	}
 

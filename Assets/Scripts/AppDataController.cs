@@ -6,6 +6,8 @@ using System.Timers;
 
 public class AppDataController : MonoBehaviour
 {
+	Main mainScript;
+
 	public string saveFile;
 	public GameObject[] timersObjects;
 	public DataBase dataBase;
@@ -20,6 +22,10 @@ public class AppDataController : MonoBehaviour
 	{
 		dataBase = new DataBase();
 		dataBase.timersList = new List<TimerData>();
+
+		mainScript = GameObject.Find("Main").GetComponent<Main>();
+
+		LoadData();
 	}
 
 	private void Update()
@@ -43,11 +49,22 @@ public class AppDataController : MonoBehaviour
 			string content = File.ReadAllText(saveFile);
 			dataBase = JsonUtility.FromJson<DataBase>(content);
 
-			Debug.Log(content);
+			foreach (TimerData timer in dataBase.timersList)
+			{
+				mainScript.InstantiateTimer(timer);
+			}
 		}
 		else
 		{
-			Debug.Log("Can't read save file");
+			TimerData error = new TimerData();
+			error.id = "erre";
+			error.timerName = "Can't find save file";
+			error.start = "00:00";
+			error.end = "00:00";
+
+			mainScript.InstantiateTimer(error);
+
+			print("error");
 		}
 	}
 
