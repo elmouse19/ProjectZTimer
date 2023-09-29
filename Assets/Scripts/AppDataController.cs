@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using System.Timers;
+using UnityEngine;
 
 public class AppDataController : MonoBehaviour
 {

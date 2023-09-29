@@ -24,10 +24,29 @@ public class Main : MonoBehaviour
 	{
 		instantiateScript.Instantiate(timersCount, timerData);
 		IncreaseTimersCount();
+		UpdateVPContentSize();
+	}
+
+	public void ASD()
+	{
+		TimerData tData = new TimerData();
+
+		tData.timerName = "name";
+		tData.start = "00:00";
+		tData.end = "00:00";
+
+		InstantiateTimer(tData);
 	}
 
 	void IncreaseTimersCount()
 	{
 		timersCount++;
+	}
+
+	void UpdateVPContentSize()
+	{
+		RectTransform vpContent = GameObject.FindWithTag("VPContent").GetComponent<RectTransform>();
+
+		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, 100f * timersCount);
 	}
 }
