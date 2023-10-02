@@ -8,8 +8,7 @@ public class Main : MonoBehaviour
 
 	[SerializeField] static int timersCount = 0;
 
-	// Start is called before the first frame update
-	void Start()
+	private void Awake()
 	{
 		instantiateScript = GetComponent<InstantiatePrefab>();
 	}
@@ -27,7 +26,7 @@ public class Main : MonoBehaviour
 		UpdateVPContentSize();
 	}
 
-	public void ASD()
+	public void CreateTimerObj()
 	{
 		TimerData tData = new TimerData();
 
@@ -47,6 +46,6 @@ public class Main : MonoBehaviour
 	{
 		RectTransform vpContent = GameObject.FindWithTag("VPContent").GetComponent<RectTransform>();
 
-		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, 100f * timersCount);
+		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, 105f * timersCount);
 	}
 }
