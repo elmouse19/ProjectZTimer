@@ -14,14 +14,14 @@ public class AppDataController : MonoBehaviour
 	void Awake()
 	{
 		saveFile = Application.dataPath + "/appData.json";
+
+		mainScript = GameObject.Find("Main").GetComponent<Main>();
 	}
 
 	void Start()
 	{
 		dataBase = new DataBase();
 		dataBase.timersList = new List<TimerData>();
-
-		mainScript = GameObject.Find("Main").GetComponent<Main>();
 
 		LoadData();
 	}
@@ -49,13 +49,20 @@ public class AppDataController : MonoBehaviour
 
 			foreach (TimerData timer in dataBase.timersList)
 			{
-				mainScript.InstantiateTimer(timer);
+				TimerData tmpTD = new TimerData();
+				tmpTD.order = timer.order;
+				tmpTD.id = timer.id;
+				tmpTD.timerName = timer.timerName;
+				tmpTD.start = timer.start;
+				tmpTD.end = timer.end;
+
+				mainScript.InstantiateTimer(tmpTD);
 			}
 		}
 		else
 		{
 			TimerData error = new TimerData();
-			error.id = "erre";
+			error.id = "err";
 			error.timerName = "Can't find save file";
 			error.start = "00:00";
 			error.end = "00:00";

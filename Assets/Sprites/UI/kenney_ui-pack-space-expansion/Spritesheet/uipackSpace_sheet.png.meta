@@ -513,9 +513,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 300
-        y: 110
-        width: 102
-        height: 110
+        y: 184
+        width: 35
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,9 +618,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 300
-        y: 12
-        width: 100
-        height: 98
+        y: 77
+        width: 35
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -630,6 +630,69 @@ TextureImporter:
       bones: []
       spriteID: 6ab4b932d2d1cb243851b0a21df1269c
       internalID: 959710149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: uipackSpace_sheet_24
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 384
+        width: 100
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 7, y: 0, z: 7, w: 5}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe9e06829c0504a4e8bfcb7580c6d0c4
+      internalID: 851176571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: uipackSpace_sheet_25
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 224
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 5, z: 4, w: 6}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 997c9c110a1c6504e92ed766548adb34
+      internalID: -161942922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: uipackSpace_sheet_26
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 92
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 5, z: 4, w: 6}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c29bf44cf809b142854df71ad6f1213
+      internalID: 1638725612
       vertices: []
       indices: 
       edges: []
@@ -663,6 +726,8 @@ TextureImporter:
       uipackSpace_sheet_22: -461797069
       uipackSpace_sheet_23: 959710149
       uipackSpace_sheet_24: 851176571
+      uipackSpace_sheet_25: -161942922
+      uipackSpace_sheet_26: 1638725612
       uipackSpace_sheet_3: -1827899845
       uipackSpace_sheet_4: -2068155330
       uipackSpace_sheet_5: -893143482

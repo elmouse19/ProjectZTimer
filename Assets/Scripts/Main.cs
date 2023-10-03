@@ -1,52 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Main : MonoBehaviour
 {
-	InstantiatePrefab instantiateScript;
+	InstantiatePrefab instantiatePrefab;
+	InstantiateTimer instantiateTimerScript;
+	ViewPortContent viewPortContentScript;
 
 	[SerializeField] static int timersCount = 0;
 
-	// Start is called before the first frame update
-	void Start()
+	private void Awake()
 	{
-		instantiateScript = GetComponent<InstantiatePrefab>();
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
+		instantiatePrefab = GetComponent<InstantiatePrefab>();
+		instantiateTimerScript = GetComponent<InstantiateTimer>();
+		viewPortContentScript = GameObject.FindGameObjectWithTag("VPContent").GetComponent<ViewPortContent>();
 	}
 
 	public void InstantiateTimer(TimerData timerData)
 	{
-		instantiateScript.Instantiate(timersCount, timerData);
+		instantiateTimerScript.Instantiate(timersCount, timerData);
 		IncreaseTimersCount();
-		UpdateVPContentSize();
+		viewPortContentScript.UpdateVPContentSize(timersCount);
 	}
 
-	public void ASD()
+	public void InstantiateAlert()
 	{
-		TimerData tData = new TimerData();
-
-		tData.timerName = "name";
-		tData.start = "00:00";
-		tData.end = "00:00";
-
-		InstantiateTimer(tData);
+		instantiatePrefab.Instantiate();
 	}
 
 	void IncreaseTimersCount()
 	{
 		timersCount++;
-	}
-
-	void UpdateVPContentSize()
-	{
-		RectTransform vpContent = GameObject.FindWithTag("VPContent").GetComponent<RectTransform>();
-
-		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, 100f * timersCount);
 	}
 }

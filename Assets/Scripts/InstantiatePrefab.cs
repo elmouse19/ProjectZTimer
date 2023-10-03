@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class InstantiatePrefab : MonoBehaviour
 {
@@ -7,14 +8,9 @@ public class InstantiatePrefab : MonoBehaviour
 	public Transform point;
 	public float livingTime;
 
-	public void Instantiate(int timersCount, TimerData timerData)
+	public void Instantiate()
 	{
-		
-		float cacltulateYPos = point.position.y + (-100f * timersCount);
-
-		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
-
-		instantiatedObject.GetComponent<Timer>().SetTimer(timerData.start, timerData.end, timerData.timerName, timerData.id);
+		GameObject instantiatedObject = Instantiate(prefab, point.position, Quaternion.identity, target) as GameObject;
 
 		if (livingTime > 0f)
 		{
