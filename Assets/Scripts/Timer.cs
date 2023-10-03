@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,11 +36,10 @@ public class Timer : MonoBehaviour
 
 	void Start()
 	{
-		timerData =	new TimerData();
-		SetTimer(timerStart.text, timerEnd.text, timerName.text, "");
+		//timerData =	new TimerData();
 	}
 
-	public void SetTimer(string start, string end, string name, string id)
+	public void SetTimer(string start, string end, string name)
 	{
 		timerData.id = Guid.NewGuid().ToString();
 		timerData.timerName = name;
@@ -67,6 +65,7 @@ public class Timer : MonoBehaviour
 		sec = timeDiff.Seconds;
 
 		rest = hour * 60 * 60 + min * 60 + sec;
+		//rest = 0;
 
 		if (rest > 0)
 		{

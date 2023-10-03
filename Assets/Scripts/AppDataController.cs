@@ -62,7 +62,7 @@ public class AppDataController : MonoBehaviour
 		else
 		{
 			TimerData error = new TimerData();
-			error.id = "erre";
+			error.id = "err";
 			error.timerName = "Can't find save file";
 			error.start = "00:00";
 			error.end = "00:00";
