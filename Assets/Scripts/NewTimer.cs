@@ -37,7 +37,7 @@ public class NewTimer : MonoBehaviour
 		}
 		else
 		{
-			print("error");
+			mainScrit.InstantiateAlert();
 		}
 	}
 
