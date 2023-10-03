@@ -59,8 +59,6 @@ public class Timer : MonoBehaviour
 		string timeStartF = timerData.start + ":00";
 		string timeEndF = timerData.end + ":00";
 
-		print(timeStartF);
-
 		dateTimeStart = DateTime.ParseExact(timeStartF, "HH:mm:ss",
 													 CultureInfo.InvariantCulture);
 		dateTimeEnd = DateTime.ParseExact(timeEndF, "HH:mm:ss",
@@ -73,7 +71,6 @@ public class Timer : MonoBehaviour
 		sec = timeDiff.Seconds;
 
 		rest = hour * 60 * 60 + min * 60 + sec;
-		//rest = 0;
 
 		if (rest > 0)
 		{
