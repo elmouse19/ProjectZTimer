@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NewTimer : MonoBehaviour
 {
-	[SerializeField] TMP_Text inputName, inputStart, inputEnd, inputOrder;
+	[SerializeField] TMP_InputField inputName, inputStart, inputEnd, inputOrder;
 
 	Main mainScrit;
 
@@ -28,10 +28,10 @@ public class NewTimer : MonoBehaviour
 		{
 			TimerData tData = new TimerData();
 
-			tData.timerName = inputName.GetParsedText();
-			tData.start = inputStart.GetParsedText();
-			tData.end = inputEnd.GetParsedText();
-			tData.order = inputOrder.GetParsedText();
+			tData.timerName = SanitizeTMPText(inputName.textComponent.GetParsedText());
+			tData.start = SanitizeTMPText(inputStart.textComponent.GetParsedText());
+			tData.end = SanitizeTMPText(inputEnd.textComponent.GetParsedText());
+			tData.order = SanitizeTMPText(inputOrder.textComponent.GetParsedText());
 
 			mainScrit.InstantiateTimer(tData);
 		}
@@ -39,6 +39,11 @@ public class NewTimer : MonoBehaviour
 		{
 			print("error");
 		}
+	}
+
+	string SanitizeTMPText(string text)
+	{
+		return Regex.Replace(text, "[^a-zA-Z0-9: ]", "");
 	}
 
 	bool Validations()

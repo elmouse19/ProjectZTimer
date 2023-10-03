@@ -14,7 +14,7 @@ public class InstantiatePrefab : MonoBehaviour
 
 		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
 
-		instantiatedObject.GetComponent<Timer>().SetTimer(timerData.start, timerData.end, timerData.timerName);
+		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerData.order);
 
 		if (livingTime > 0f)
 		{

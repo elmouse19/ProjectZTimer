@@ -39,19 +39,27 @@ public class Timer : MonoBehaviour
 		//timerData =	new TimerData();
 	}
 
-	public void SetTimer(string start, string end, string name)
+	public void SetTdData(string name, string start, string end, string id = "", string order = "")
 	{
-		timerData.id = Guid.NewGuid().ToString();
+		timerData.id = id != "" ? id : Guid.NewGuid().ToString();
 		timerData.timerName = name;
 		timerData.start = start;
 		timerData.end = end;
+		timerData.order = order;
 
-		timerStart.text = start;
-		timerEnd.text = end;
-		timerName.text = name;
+		SetTimer();
+	}
 
-		string timeStartF = timerStart.text + ":00";
-		string timeEndF = timerEnd.text + ":00";
+	public void SetTimer()
+	{
+		timerName.text = timerData.timerName;
+		timerStart.text = timerData.start;
+		timerEnd.text = timerData.end;
+
+		string timeStartF = timerData.start + ":00";
+		string timeEndF = timerData.end + ":00";
+
+		print(timeStartF);
 
 		dateTimeStart = DateTime.ParseExact(timeStartF, "HH:mm:ss",
 													 CultureInfo.InvariantCulture);
