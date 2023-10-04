@@ -8,13 +8,13 @@ public class NewTimer : MonoBehaviour
 {
 	[SerializeField] TMP_InputField inputName, inputStart, inputEnd, inputOrder;
 
-	Main mainScrit;
+	Main mainScript;
 
 	bool validationOk;
 
 	private void Awake()
 	{
-		mainScrit = GameObject.Find("Main").GetComponent<Main>();
+		mainScript = GameObject.Find("Main").GetComponent<Main>();
 	}
 
 	private void Start()
@@ -33,11 +33,11 @@ public class NewTimer : MonoBehaviour
 			tData.end = SanitizeTMPText(inputEnd.textComponent.GetParsedText());
 			tData.order = SanitizeTMPText(inputOrder.textComponent.GetParsedText());
 
-			mainScrit.InstantiateTimer(tData);
+			mainScript.InstantiateTimer(tData);
 		}
 		else
 		{
-			mainScrit.InstantiateAlert();
+			mainScript.InstantiateAlert("Check the data entered");
 		}
 	}
 

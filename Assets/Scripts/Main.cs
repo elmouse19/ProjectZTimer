@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Main : MonoBehaviour
 {
@@ -23,9 +23,12 @@ public class Main : MonoBehaviour
 		viewPortContentScript.UpdateVPContentSize(timersCount);
 	}
 
-	public void InstantiateAlert()
+	public void InstantiateAlert(string msg)
 	{
 		instantiatePrefab.Instantiate();
+
+		GameObject alert = GameObject.FindWithTag("Alert");
+		alert.GetComponentInChildren<TMP_Text>().text = msg;
 	}
 
 	void IncreaseTimersCount()
