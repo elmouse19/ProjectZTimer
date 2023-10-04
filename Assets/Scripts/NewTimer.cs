@@ -9,12 +9,14 @@ public class NewTimer : MonoBehaviour
 	[SerializeField] TMP_InputField inputName, inputStart, inputEnd, inputOrder;
 
 	Main mainScript;
+	AppDataController appDataController;
 
 	bool validationOk;
 
 	private void Awake()
 	{
 		mainScript = GameObject.Find("Main").GetComponent<Main>();
+		appDataController = GameObject.Find("AppDataController").GetComponent<AppDataController>();
 	}
 
 	private void Start()
@@ -34,6 +36,8 @@ public class NewTimer : MonoBehaviour
 			tData.order = SanitizeTMPText(inputOrder.textComponent.GetParsedText());
 
 			mainScript.InstantiateTimer(tData);
+			gameObject.SetActive(false);
+			appDataController.SaveData();
 		}
 		else
 		{

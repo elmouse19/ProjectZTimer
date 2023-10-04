@@ -8,6 +8,8 @@ public class Timer : MonoBehaviour
 {
 	public TimerData timerData;
 
+	AppDataController appDataController;
+
 	GameObject timerChild;
 
 	TMP_Text timerStart;
@@ -21,8 +23,9 @@ public class Timer : MonoBehaviour
 	DateTime dateTimeStart, dateTimeEnd;
 	TimeSpan timeDiff;
 
-	float rest;
-	bool running;
+	int clickCounter;
+	float rest, confirmActionTimeWait;
+	bool running, watingConfirm;
 
 	void Awake()
 	{
@@ -36,7 +39,40 @@ public class Timer : MonoBehaviour
 
 	void Start()
 	{
-		//timerData =	new TimerData();
+		clickCounter = 0;
+		confirmActionTimeWait = 5f;
+		watingConfirm = false;
+
+		appDataController = GameObject.Find("AppDataController").GetComponent<AppDataController>();
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		// RUNING TIMER
+		if (running)
+		{
+
+			rest -= Time.deltaTime;
+
+			if (rest < 1)
+			{
+				// stop
+				running = false;
+			}
+
+			UpdateCountDownText();
+		}
+
+		// CONFIRM DELETE
+		if (watingConfirm && confirmActionTimeWait <= 5f && confirmActionTimeWait > 0f)
+		{
+			confirmActionTimeWait -= Time.deltaTime;
+		}
+		else if (watingConfirm && confirmActionTimeWait <= 0f)
+		{
+			ResetConfirmation();
+		}
 	}
 
 	public void SetTdData(string name, string start, string end, string id = "", string order = "")
@@ -79,31 +115,6 @@ public class Timer : MonoBehaviour
 		}
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-		if (running)
-		{
-			//TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
-
-			rest -= Time.deltaTime;
-
-			if (rest < 1)
-			{
-				// stop
-				running = false;
-			}
-
-			UpdateCountDownText();
-		}
-	}
-
-	void UpdateCountDownText()
-	{
-		TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
-		countDown.text = string.Format("{0:hh\\:mm\\:ss}", timerTex);
-	}
-
 	public void Run()
 	{
 		running = !running;
@@ -116,5 +127,30 @@ public class Timer : MonoBehaviour
 		{
 			transform.Find("PlayBtn").GetComponent<Image>().sprite = playSprite;
 		}
+	}
+
+	void UpdateCountDownText()
+	{
+		TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
+		countDown.text = string.Format("{0:hh\\:mm\\:ss}", timerTex);
+	}
+
+	public void RemoveTimer()
+	{
+		clickCounter++;
+		watingConfirm = true;
+
+		if(clickCounter == 3)
+		{
+			Destroy(gameObject);
+			appDataController.SaveData();
+		}
+	}
+
+	void ResetConfirmation()
+	{
+		clickCounter = 0;
+		confirmActionTimeWait = 5f;
+		watingConfirm = false;
 	}
 }

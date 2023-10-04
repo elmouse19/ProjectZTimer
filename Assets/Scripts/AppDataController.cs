@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -65,15 +66,9 @@ public class AppDataController : MonoBehaviour
 		}
 	}
 
-	void SaveData()
+	public void SaveData()
 	{
-		dataBase.timersList = GetTimersData();
-
-		string fileJSON = JsonUtility.ToJson(dataBase);
-
-		File.WriteAllText(saveFile, fileJSON);
-
-		Debug.Log("File saved");
+		StartCoroutine(WaitAndSave());
 	}
 
 	List<TimerData> GetTimersData()
@@ -101,5 +96,19 @@ public class AppDataController : MonoBehaviour
 		}
 
 		return newTimersList;
+	}
+
+
+	IEnumerator WaitAndSave()
+	{
+		yield return new WaitForSeconds(1f); // Wait 1 second
+
+		dataBase.timersList = GetTimersData();
+
+		string fileJSON = JsonUtility.ToJson(dataBase);
+
+		File.WriteAllText(saveFile, fileJSON);
+
+		Debug.Log("File saved");
 	}
 }

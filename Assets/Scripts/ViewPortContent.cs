@@ -10,6 +10,6 @@ public class ViewPortContent : MonoBehaviour
 	}
 	public void UpdateVPContentSize(int timersCount)
 	{
-		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, 115f * timersCount);
+		vpContent.sizeDelta = new Vector2(vpContent.sizeDelta.x, (104.8158f * timersCount) + 20f );
 	}
 }

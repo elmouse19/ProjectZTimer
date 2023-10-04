@@ -10,7 +10,7 @@ public class InstantiateTimer : MonoBehaviour
 	public void Instantiate(int timersCount, TimerData timerData)
 	{
 		
-		float cacltulateYPos = point.position.y + (-105f * timersCount);
+		float cacltulateYPos = point.position.y + (-125f * timersCount);
 
 		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
 
