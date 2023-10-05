@@ -18,11 +18,15 @@ public class InstantiateTimer : MonoBehaviour
 
 	public void Instantiate(int timersCount, TimerData timerData)
 	{
-		float prefabHeight = prefab.GetComponent<RectTransform>().sizeDelta.y;
+		//float prefabHeight = prefab.GetComponent<RectTransform>().sizeDelta.y;
+		float prefabHeight = prefab.GetComponent<RectTransform>().rect.height;
+		//float prefabHeight = point.GetComponent<RectTransform>().rect.height;
 
 		float cacltulateYPos = -marginTop + (-(prefabHeight + marginBottom) * timersCount);
 
-		GameObject instantiatedObject = Instantiate(prefab, new Vector3(0, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
+		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, point.GetComponent<RectTransform>().anchoredPosition.y, point.position.z), Quaternion.identity, target) as GameObject;
+
+		instantiatedObject.transform.position = new Vector3(point.position.x, cacltulateYPos, point.position.z);
 
 		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerData.order);
 

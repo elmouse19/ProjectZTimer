@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+	//public GameObject messagePrefab; // Prefab of the message you want to display.
+
 	public TimerData timerData;
 
 	AppDataController appDataController;
+	Main mainScript;
 
 	GameObject timerChild;
 
@@ -27,8 +30,13 @@ public class Timer : MonoBehaviour
 	float rest, confirmActionTimeWait;
 	bool running, watingConfirm;
 
+	private float timeBetweenMessages = 900.0f; // Time in seconds (15 minutes).
+	private float lastMessageTime = 0.0f;
+
 	void Awake()
 	{
+		mainScript = GameObject.Find("Main").GetComponent<Main>();
+
 		timerChild = transform.Find("TimerClock").gameObject;
 
 		timerStart = timerChild.transform.Find("TimerStart").GetComponent<TMP_Text>();
@@ -52,8 +60,9 @@ public class Timer : MonoBehaviour
 		// RUNING TIMER
 		if (running)
 		{
-
 			rest -= Time.deltaTime;
+
+			transform.Find("PlayBtn").GetComponent<Image>().sprite = stopSprite;
 
 			if (rest < 1)
 			{
@@ -61,7 +70,22 @@ public class Timer : MonoBehaviour
 				running = false;
 			}
 
+			// Check if enough time has passed to display another message.
+			if (Time.time - lastMessageTime >= timeBetweenMessages)
+			{
+				// Instantiate the message (you can create a prefab for this) at the desired position.
+				mainScript.PlaySound();
+				mainScript.InstantiateAlert("Notice: 15 minutes have passed. Take a break.");
+
+				// Update the time of the last displayed message.
+				lastMessageTime = Time.time;
+			}
+
 			UpdateCountDownText();
+		}
+		else
+		{
+			transform.Find("PlayBtn").GetComponent<Image>().sprite = playSprite;
 		}
 
 		// CONFIRM DELETE
@@ -118,15 +142,6 @@ public class Timer : MonoBehaviour
 	public void Run()
 	{
 		running = !running;
-
-		if (running)
-		{
-			transform.Find("PlayBtn").GetComponent<Image>().sprite = stopSprite;
-		}
-		else
-		{
-			transform.Find("PlayBtn").GetComponent<Image>().sprite = playSprite;
-		}
 	}
 
 	void UpdateCountDownText()

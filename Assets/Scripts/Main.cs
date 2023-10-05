@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
+	public AudioClip sound; // Drag and drop the sound clip you want to play here
+
 	InstantiatePrefab instantiatePrefab;
 	InstantiateTimer instantiateTimerScript;
 	ViewPortContent viewPortContentScript;
+	AudioSource audioSource; // Drag and drop the AudioSource component here
 
 	[SerializeField] static int timersCount = 0;
 
@@ -13,7 +16,13 @@ public class Main : MonoBehaviour
 	{
 		instantiatePrefab = GetComponent<InstantiatePrefab>();
 		instantiateTimerScript = GetComponent<InstantiateTimer>();
+		audioSource = GetComponent<AudioSource>();
 		viewPortContentScript = GameObject.FindGameObjectWithTag("VPContent").GetComponent<ViewPortContent>();
+	}
+
+	public void PlaySound()
+	{
+		audioSource.PlayOneShot(sound);
 	}
 
 	public void InstantiateTimer(TimerData timerData)

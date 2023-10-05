@@ -25,7 +25,6 @@ public class OnMouseOverColor : MonoBehaviour
 	void OnMouseOver(PointerEventData eventData)
 	{
 		// Change the color of the GameObject to red when the mouse is over GameObject
-		print(m_Image.color);
 		m_Image.color = m_MouseOverColor;
 	}
 

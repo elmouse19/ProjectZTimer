@@ -18,9 +18,6 @@ public class InputLabelResizer : MonoBehaviour
 
 			rt.offsetMin = new Vector2(0f, rt.offsetMin.y);
 			rt.offsetMax = new Vector2(-(parentObj.rect.width * 50 / 100 + 2.5f), rt.offsetMax.y);
-
-			print(parentObj.rect.width);
-			print(rt.offsetMax);
 		}
 		else
 		{
