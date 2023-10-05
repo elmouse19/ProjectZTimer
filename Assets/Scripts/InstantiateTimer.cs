@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class InstantiateTimer : MonoBehaviour
 {
@@ -6,13 +7,22 @@ public class InstantiateTimer : MonoBehaviour
 	public Transform target;
 	public Transform point;
 	public float livingTime;
+	public float marginTop;
+	public float marginBottom;
+
+	private void Start()
+	{
+		marginTop = 15f;
+		marginBottom = 5f;
+	}
 
 	public void Instantiate(int timersCount, TimerData timerData)
 	{
-		
-		float cacltulateYPos = point.position.y + (-125f * timersCount);
+		float prefabHeight = prefab.GetComponent<RectTransform>().sizeDelta.y;
 
-		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
+		float cacltulateYPos = -marginTop + (-(prefabHeight + marginBottom) * timersCount);
+
+		GameObject instantiatedObject = Instantiate(prefab, new Vector3(0, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
 
 		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerData.order);
 
