@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InstantiateTimer : MonoBehaviour
 {
@@ -18,15 +17,22 @@ public class InstantiateTimer : MonoBehaviour
 
 	public void Instantiate(int timersCount, TimerData timerData)
 	{
-		//float prefabHeight = prefab.GetComponent<RectTransform>().sizeDelta.y;
-		float prefabHeight = prefab.GetComponent<RectTransform>().rect.height;
-		//float prefabHeight = point.GetComponent<RectTransform>().rect.height;
+		/************************* Revisar para corregir y poder utilizar este metodo con el calculo correcto ************************************/
+		////float prefabHeight = prefab.GetComponent<RectTransform>().sizeDelta.y;
+		//float prefabHeight = prefab.GetComponent<RectTransform>().rect.height;
+		////float prefabHeight = point.GetComponent<RectTransform>().rect.height;
 
-		float cacltulateYPos = -marginTop + (-(prefabHeight + marginBottom) * timersCount);
+		//float cacltulateYPos = -marginTop + (-(prefabHeight + marginBottom) * timersCount);
 
-		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, point.GetComponent<RectTransform>().anchoredPosition.y, point.position.z), Quaternion.identity, target) as GameObject;
+		//GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, point.GetComponent<RectTransform>().anchoredPosition.y, point.position.z), Quaternion.identity, target) as GameObject;
 
-		instantiatedObject.transform.position = new Vector3(point.position.x, cacltulateYPos, point.position.z);
+		//instantiatedObject.transform.position = new Vector3(point.position.x, cacltulateYPos, point.position.z);
+		/************************* Revisar para corregir y poder utilizar este metodo con el calculo correcto ************************************/
+		float cacltulateYPos = point.position.y + ((-100f + -marginBottom) * timersCount);
+
+
+		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
+
 
 		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerData.order);
 
