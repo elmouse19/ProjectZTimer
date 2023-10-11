@@ -1,3 +1,5 @@
+using System;
+
 [System.Serializable]
 public class TimerData
 {
@@ -5,5 +7,5 @@ public class TimerData
 	public string timerName;
 	public string start;
 	public string end;
-	public string order;
+	public Nullable<int> order;
 }

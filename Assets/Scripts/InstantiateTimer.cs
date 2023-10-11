@@ -29,13 +29,13 @@ public class InstantiateTimer : MonoBehaviour
 
 		//instantiatedObject.transform.position = new Vector3(point.position.x, cacltulateYPos, point.position.z);
 		/************************* Revisar para corregir y poder utilizar este metodo con el calculo correcto ************************************/
-		float cacltulateYPos = point.position.y + ((-100f + -marginBottom) *  (timerData.order != "" ? (Convert.ToInt32(timerData.order) - 1) : timersCount));
+		int timerOrder = timerData.order != null ? Convert.ToInt32(timerData.order) : timersCount;
 
+		float cacltulateYPos = point.position.y + ((-100f + -marginBottom) * timerOrder);
 
 		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
 
-
-		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerData.order);
+		instantiatedObject.GetComponent<Timer>().SetTdData(timerData.timerName, timerData.start, timerData.end, timerData.id, timerOrder);
 
 		if (livingTime > 0f)
 		{

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -33,7 +32,7 @@ public class NewTimer : MonoBehaviour
 			tData.timerName = SanitizeTMPText(inputName.textComponent.GetParsedText());
 			tData.start = SanitizeTMPText(inputStart.textComponent.GetParsedText());
 			tData.end = SanitizeTMPText(inputEnd.textComponent.GetParsedText());
-			tData.order = SanitizeTMPText(inputOrder.textComponent.GetParsedText());
+			tData.order = Convert.ToInt32(SanitizeTMPText(inputOrder.textComponent.GetParsedText())) - 1;
 
 			mainScript.InstantiateTimer(tData);
 			gameObject.SetActive(false);

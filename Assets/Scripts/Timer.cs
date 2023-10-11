@@ -100,7 +100,7 @@ public class Timer : MonoBehaviour
 		}
 	}
 
-	public void SetTdData(string name, string start, string end, string id = "", string order = "")
+	public void SetTdData(string name, string start, string end, string id = "", Nullable<int> order = null)
 	{
 		timerData.id = id != "" ? id : Guid.NewGuid().ToString();
 		timerData.timerName = name;
