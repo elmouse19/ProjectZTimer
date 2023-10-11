@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public class Timer : MonoBehaviour
 	AppDataController appDataController;
 	Main mainScript;
 
-	GameObject timerChild;
+	GameObject timerChild, playBtn, resetBtnBig, resetBtnSmall;
 
 	TMP_Text timerStart;
 	TMP_Text timerEnd;
@@ -21,20 +22,25 @@ public class Timer : MonoBehaviour
 	TMP_Text timerName;
 
 	[SerializeField] int hour, min, sec;
-	[SerializeField] Sprite playSprite, stopSprite;
+	[SerializeField] Sprite playSprite, stopSprite, resetSprite;
 
 	DateTime dateTimeStart, dateTimeEnd;
 	TimeSpan timeDiff;
 
 	int clickCounter;
-	float rest, confirmActionTimeWait;
+	float timeAmount, timeLeft, confirmActionTimeWait;
 	bool running, watingConfirm;
 
 	private float timeBetweenMessages = 900.0f; // Time in seconds (15 minutes).
-	private float lastMessageTime = 0.0f;
+	private float lastMessageTime = 0.1f;
 
 	void Awake()
 	{
+		playBtn = transform.Find("PlayBtn").GameObject();
+		resetBtnBig = transform.Find("ResetBtnBig").GameObject();
+		resetBtnSmall = transform.Find("ResetBtnSmall").GameObject();
+
+
 		mainScript = GameObject.Find("Main").GetComponent<Main>();
 
 		timerChild = transform.Find("TimerClock").gameObject;
@@ -60,14 +66,13 @@ public class Timer : MonoBehaviour
 		// RUNING TIMER
 		if (running)
 		{
-			rest -= Time.deltaTime;
+			timeLeft -= Time.deltaTime;
 
-			transform.Find("PlayBtn").GetComponent<Image>().sprite = stopSprite;
-
-			if (rest < 1)
+			if (timeLeft <= 0)
 			{
 				// stop
-				running = false;
+				Run();
+				Finish();
 			}
 
 			// Check if enough time has passed to display another message.
@@ -82,10 +87,6 @@ public class Timer : MonoBehaviour
 			}
 
 			UpdateCountDownText();
-		}
-		else
-		{
-			transform.Find("PlayBtn").GetComponent<Image>().sprite = playSprite;
 		}
 
 		// CONFIRM DELETE
@@ -130,11 +131,12 @@ public class Timer : MonoBehaviour
 		min = timeDiff.Minutes;
 		sec = timeDiff.Seconds;
 
-		rest = hour * 60 * 60 + min * 60 + sec;
+		timeAmount = hour * 60 * 60 + min * 60 + sec;
+		timeLeft = timeAmount;
 
-		if (rest > 0)
+		if (timeLeft > 0)
 		{
-			transform.Find("PlayBtn").gameObject.GetComponent<Button>().interactable = true;
+			playBtn.GetComponent<Button>().interactable = true;
 			UpdateCountDownText();
 		}
 	}
@@ -142,11 +144,44 @@ public class Timer : MonoBehaviour
 	public void Run()
 	{
 		running = !running;
+
+		if (running)
+		{
+			playBtn.GetComponent<Image>().sprite = stopSprite;
+			resetBtnSmall.GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			playBtn.GetComponent<Image>().sprite = playSprite;
+			resetBtnSmall.GetComponent<Button>().interactable = true;
+		}
+	}
+
+	public void Finish()
+	{
+		playBtn.SetActive(false);
+		resetBtnBig.SetActive(true);
+		resetBtnSmall.SetActive(false);
+	}
+
+	public void ResetTimer()
+	{
+		timeLeft = timeAmount;
+		running = false;
+
+		playBtn.SetActive(true);
+
+		resetBtnBig.SetActive(false);
+
+		resetBtnSmall.SetActive(true);
+		resetBtnSmall.GetComponent<Button>().interactable = false;
+
+		UpdateCountDownText();
 	}
 
 	void UpdateCountDownText()
 	{
-		TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(rest)));
+		TimeSpan timerTex = TimeSpan.FromSeconds((double)(new decimal(timeLeft)));
 		countDown.text = string.Format("{0:hh\\:mm\\:ss}", timerTex);
 	}
 
@@ -155,8 +190,9 @@ public class Timer : MonoBehaviour
 		clickCounter++;
 		watingConfirm = true;
 
-		if(clickCounter == 3)
+		if (clickCounter == 3)
 		{
+			mainScript.DecreaseTimersCount();
 			Destroy(gameObject);
 			appDataController.SaveData();
 		}

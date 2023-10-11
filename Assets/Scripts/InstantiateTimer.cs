@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InstantiateTimer : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class InstantiateTimer : MonoBehaviour
 
 		//instantiatedObject.transform.position = new Vector3(point.position.x, cacltulateYPos, point.position.z);
 		/************************* Revisar para corregir y poder utilizar este metodo con el calculo correcto ************************************/
-		float cacltulateYPos = point.position.y + ((-100f + -marginBottom) * timersCount);
+		float cacltulateYPos = point.position.y + ((-100f + -marginBottom) *  (timerData.order != "" ? (Convert.ToInt32(timerData.order) - 1) : timersCount));
 
 
 		GameObject instantiatedObject = Instantiate(prefab, new Vector3(point.position.x, cacltulateYPos, 0), Quaternion.identity, target) as GameObject;
