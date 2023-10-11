@@ -27,12 +27,14 @@ public class NewTimer : MonoBehaviour
 	{
 		if (Validations())
 		{
+			string tempOrder = SanitizeTMPText(inputOrder.textComponent.GetParsedText());
+
 			TimerData tData = new TimerData();
 
 			tData.timerName = SanitizeTMPText(inputName.textComponent.GetParsedText());
 			tData.start = SanitizeTMPText(inputStart.textComponent.GetParsedText());
 			tData.end = SanitizeTMPText(inputEnd.textComponent.GetParsedText());
-			tData.order = Convert.ToInt32(SanitizeTMPText(inputOrder.textComponent.GetParsedText())) - 1;
+			tData.order = tempOrder != "" ? Convert.ToInt32(tempOrder) - 1 : null;
 
 			mainScript.InstantiateTimer(tData);
 			gameObject.SetActive(false);
